@@ -2,6 +2,8 @@
 
 A single-page application that consumes the [TheSportsDB](https://www.thesportsdb.com/free_sports_api) API to display, search, and filter sports leagues — with season badge lookup on click.
 
+**[Live Demo](https://anatkig.github.io/sports-leagues-explorer/)**
+
 ## Features
 
 - **League listing** — Fetches and displays all leagues showing name, sport type, and alternate name
@@ -86,3 +88,18 @@ src/
 | `GET /search_all_seasons.php?badge=1&id=<id>` | Fetch season badges for a league |
 
 Base URL: `https://www.thesportsdb.com/api/v1/json/3`
+
+## Deployment
+
+The app is automatically deployed to GitHub Pages via a GitHub Actions workflow on every push to `master`.
+
+- The workflow runs `npm ci`, `npm run build`, and `npm test`
+- On success, the `dist/` folder is deployed to GitHub Pages
+- Live at: **https://anatkig.github.io/sports-leagues-explorer/**
+
+To deploy manually or to a different environment:
+
+```bash
+npm run build        # outputs to dist/
+npx serve dist       # preview locally (or use any static server)
+```
