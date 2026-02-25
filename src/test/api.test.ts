@@ -28,7 +28,8 @@ describe("fetchAllLeagues", () => {
     const result = await fetchAllLeagues();
 
     expect(mockFetch).toHaveBeenCalledWith(
-      "https://www.thesportsdb.com/api/v1/json/3/all_leagues.php"
+      "https://www.thesportsdb.com/api/v1/json/3/all_leagues.php",
+      { signal: undefined }
     );
     expect(result).toEqual(mockData);
   });
@@ -64,7 +65,8 @@ describe("fetchSeasonBadge", () => {
     const result = await fetchSeasonBadge("4328");
 
     expect(mockFetch).toHaveBeenCalledWith(
-      "https://www.thesportsdb.com/api/v1/json/3/search_all_seasons.php?badge=1&id=4328"
+      "https://www.thesportsdb.com/api/v1/json/3/search_all_seasons.php?badge=1&id=4328",
+      { signal: undefined }
     );
     expect(result).toEqual(mockData);
   });

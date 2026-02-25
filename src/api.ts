@@ -4,8 +4,8 @@ const BASE_URL = "https://www.thesportsdb.com/api/v1/json/3";
 
 const badgeCache = new Map<string, SeasonsResponse>();
 
-export async function fetchAllLeagues(): Promise<AllLeaguesResponse> {
-  const response = await fetch(`${BASE_URL}/all_leagues.php`);
+export async function fetchAllLeagues(signal?: AbortSignal): Promise<AllLeaguesResponse> {
+  const response = await fetch(`${BASE_URL}/all_leagues.php`, { signal });
   if (!response.ok) {
     throw new Error(`Failed to fetch leagues: ${response.status}`);
   }
@@ -13,7 +13,8 @@ export async function fetchAllLeagues(): Promise<AllLeaguesResponse> {
 }
 
 export async function fetchSeasonBadge(
-  leagueId: string
+  leagueId: string,
+  signal?: AbortSignal
 ): Promise<SeasonsResponse> {
   const cached = badgeCache.get(leagueId);
   if (cached) {
@@ -21,7 +22,8 @@ export async function fetchSeasonBadge(
   }
 
   const response = await fetch(
-    `${BASE_URL}/search_all_seasons.php?badge=1&id=${leagueId}`
+    `${BASE_URL}/search_all_seasons.php?badge=1&id=${leagueId}`,
+    { signal }
   );
   if (!response.ok) {
     throw new Error(`Failed to fetch badge: ${response.status}`);

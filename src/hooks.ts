@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import type { League, Season } from "./types";
 import { fetchAllLeagues, fetchSeasonBadge } from "./api";
 
@@ -8,22 +8,19 @@ export function useLeagues() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    let cancelled = false;
-    fetchAllLeagues()
+    const controller = new AbortController();
+    fetchAllLeagues(controller.signal)
       .then((data) => {
-        if (!cancelled) {
-          setLeagues(data.leagues ?? []);
-          setLoading(false);
-        }
+        setLeagues(data.leagues ?? []);
+        setLoading(false);
       })
       .catch((err: Error) => {
-        if (!cancelled) {
-          setError(err.message);
-          setLoading(false);
-        }
+        if (err.name === "AbortError") return;
+        setError(err.message);
+        setLoading(false);
       });
     return () => {
-      cancelled = true;
+      controller.abort();
     };
   }, []);
 
@@ -59,26 +56,34 @@ export function useSeasonBadge() {
   const [season, setSeason] = useState<Season | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const controllerRef = useRef<AbortController | null>(null);
 
   const selectLeague = useCallback((leagueId: string) => {
+    controllerRef.current?.abort();
+    const controller = new AbortController();
+    controllerRef.current = controller;
+
     setSelectedLeagueId(leagueId);
     setLoading(true);
     setError(null);
     setSeason(null);
 
-    fetchSeasonBadge(leagueId)
+    fetchSeasonBadge(leagueId, controller.signal)
       .then((data) => {
         const firstSeason = data.seasons?.[0] ?? null;
         setSeason(firstSeason);
         setLoading(false);
       })
       .catch((err: Error) => {
+        if (err.name === "AbortError") return;
         setError(err.message);
         setLoading(false);
       });
   }, []);
 
   const clearSelection = useCallback(() => {
+    controllerRef.current?.abort();
+    controllerRef.current = null;
     setSelectedLeagueId(null);
     setSeason(null);
     setError(null);
