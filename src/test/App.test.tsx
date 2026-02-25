@@ -132,7 +132,7 @@ describe("App", () => {
       expect(screen.getByText("English Premier League")).toBeInTheDocument();
     });
 
-    await user.click(screen.getAllByRole("button")[0]);
+    await user.click(screen.getByRole("button", { name: /View badge for English Premier League/ }));
 
     await waitFor(() => {
       expect(screen.getByText("Season: 2023-2024")).toBeInTheDocument();
@@ -162,7 +162,7 @@ describe("App", () => {
       expect(screen.getByText("English Premier League")).toBeInTheDocument();
     });
 
-    await user.click(screen.getAllByRole("button")[0]);
+    await user.click(screen.getByRole("button", { name: /View badge for English Premier League/ }));
 
     await waitFor(() => {
       expect(screen.getByText("Season: 2023-2024")).toBeInTheDocument();
@@ -183,5 +183,35 @@ describe("App", () => {
         screen.getByText("Failed to load leagues: Server error")
       ).toBeInTheDocument();
     });
+  });
+
+  it("renders sport statistics chart after loading", async () => {
+    render(<App />);
+
+    await waitFor(() => {
+      expect(screen.getByText("English Premier League")).toBeInTheDocument();
+    });
+
+    expect(
+      screen.getByRole("region", { name: "Sport statistics" })
+    ).toBeInTheDocument();
+    expect(screen.getByText("3 total")).toBeInTheDocument();
+    expect(screen.getByText("Leagues by Sport")).toBeInTheDocument();
+  });
+
+  it("filters leagues by clicking a sport stat bar", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await waitFor(() => {
+      expect(screen.getByText("English Premier League")).toBeInTheDocument();
+    });
+
+    // Click the Basketball stat row
+    await user.click(screen.getByTitle(/Basketball: 1 league/));
+
+    expect(screen.getByText("NBA")).toBeInTheDocument();
+    expect(screen.queryByText("English Premier League")).not.toBeInTheDocument();
+    expect(screen.getByText(/Showing 1 of 3 leagues/)).toBeInTheDocument();
   });
 });

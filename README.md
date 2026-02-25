@@ -10,6 +10,7 @@ A single-page application that consumes the [TheSportsDB](https://www.thesportsd
 - **Search** — Filter leagues by name (case-insensitive)
 - **Sport filter** — Dropdown to filter by sport type (Soccer, Basketball, Motorsport, etc.)
 - **Season badge** — Click any league card to view its season badge image in a modal
+- **Sport statistics** — Interactive bar chart showing league distribution by sport (click a bar to filter)
 - **Caching** — Badge API responses are cached in memory to avoid repeat network calls
 - **Responsive** — Adapts from multi-column grid to single column on mobile
 - **Accessible** — Keyboard navigation (Enter/Space) and ARIA labels throughout
@@ -60,7 +61,8 @@ src/
 │   ├── LeagueCard.tsx      # Individual league card
 │   ├── LeagueList.tsx      # Grid of league cards
 │   ├── SearchBar.tsx       # Search input with clear button
-│   └── SportFilter.tsx     # Sport type dropdown
+│   ├── SportFilter.tsx     # Sport type dropdown
+│   └── SportStats.tsx      # Interactive sport statistics bar chart
 ├── test/
 │   ├── setup.ts            # Test setup (jsdom + jest-dom)
 │   ├── api.test.ts         # API service tests
@@ -70,7 +72,8 @@ src/
 │   ├── SportFilter.test.tsx
 │   ├── LeagueCard.test.tsx
 │   ├── LeagueList.test.tsx
-│   └── BadgePanel.test.tsx
+│   ├── BadgePanel.test.tsx
+│   └── SportStats.test.tsx
 ├── api.ts                  # API service with caching
 ├── hooks.ts                # Custom React hooks
 ├── types.ts                # TypeScript interfaces

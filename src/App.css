@@ -307,6 +307,102 @@
   font-style: italic;
 }
 
+/* ---- Sport Stats ---- */
+.sport-stats {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.sport-stats-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0 0 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sport-stats-total {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  background: var(--color-tag-bg);
+  padding: 0.15rem 0.5rem;
+  border-radius: 100px;
+}
+
+.sport-stats-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.sport-stat-row {
+  display: grid;
+  grid-template-columns: 110px 1fr 36px;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  padding: 0.3rem 0.5rem;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  transition: background-color 0.15s, border-color 0.15s;
+}
+
+.sport-stat-row:hover {
+  background: var(--color-tag-bg);
+}
+
+.sport-stat-row.active {
+  background: var(--color-tag-bg);
+  border-color: var(--color-primary);
+}
+
+.sport-stat-row.others {
+  cursor: default;
+  opacity: 0.7;
+}
+
+.sport-stat-label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--color-text);
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sport-stat-track {
+  height: 8px;
+  background: var(--color-border);
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.sport-stat-fill {
+  height: 100%;
+  background: var(--color-primary);
+  border-radius: 100px;
+  transition: width 0.4s ease;
+  min-width: 4px;
+}
+
+.sport-stat-count {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-align: right;
+}
+
 /* ---- Responsive ---- */
 @media (max-width: 640px) {
   .app {
@@ -332,5 +428,9 @@
 
   .badge-panel {
     padding: 1.5rem;
+  }
+
+  .sport-stat-row {
+    grid-template-columns: 80px 1fr 30px;
   }
 }

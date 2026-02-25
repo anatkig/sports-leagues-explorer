@@ -8,13 +8,14 @@
   - **API integration** — Writing the fetch service with in-memory caching
   - **Custom hooks** — Separating business logic (filtering, data fetching) from UI
   - **CSS styling** — Responsive layout, card design, modal overlay
-  - **Unit tests** — Full test suite with Vitest + React Testing Library (56 tests)
+  - **Unit tests** — Full test suite with Vitest + React Testing Library (67 tests)
+  - **Bonus feature** — Sport statistics bar chart with interactive filtering
 
 ## Design Decisions
 
 ### Architecture
 - **React + TypeScript + Vite** — Fast dev experience, strong type safety, minimal config.
-- **Component-based structure** — `SearchBar`, `SportFilter`, `LeagueCard`, `LeagueList`, and `BadgePanel` are isolated, reusable components with typed props.
+- **Component-based structure** — `SearchBar`, `SportFilter`, `LeagueCard`, `LeagueList`, `BadgePanel`, and `SportStats` are isolated, reusable components with typed props.
 - **Custom hooks** (`useLeagues`, `useSportTypes`, `useFilteredLeagues`, `useSeasonBadge`) keep data-fetching and business logic separate from rendering.
 - **No external UI library** — Plain CSS with custom properties to keep the bundle lean.
 
@@ -34,8 +35,14 @@
 - Loading spinner and error states are handled gracefully.
 
 ### Testing
-- 56 unit/integration tests across 8 test files covering API service, hooks, all components, and the full App.
+- 67 unit/integration tests across 9 test files covering API service, hooks, all components (including SportStats), and the full App.
 - Mocks use `vi.mock` for the API module to keep tests isolated and fast.
+
+### Extra Feature: Sport Statistics
+- An interactive bar chart (`SportStats`) shows league counts grouped by sport.
+- Displays the top 8 sports with an "Others" aggregation for the rest.
+- Click any bar to filter the league list by that sport; click again to deselect.
+- Fully responsive with animated fill bars.
 
 ### What I'd add with more time
 - Pagination or virtual scrolling for the large league list.

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { SearchBar } from "./components/SearchBar";
 import { SportFilter } from "./components/SportFilter";
+import { SportStats } from "./components/SportStats";
 import { LeagueList } from "./components/LeagueList";
 import { BadgePanel } from "./components/BadgePanel";
 import {
@@ -60,6 +61,11 @@ function App() {
 
       {!loading && !error && (
         <>
+          <SportStats
+            leagues={leagues}
+            onSportClick={setSelectedSport}
+            selectedSport={selectedSport}
+          />
           <p className="results-count">
             Showing {filteredLeagues.length} of {leagues.length} leagues
           </p>
